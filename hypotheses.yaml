@@ -1,0 +1,178 @@
+# ------------------------------------------------------------------------
+# Hypothèses de base partagées (defaults)
+# ------------------------------------------------------------------------
+defaults:
+  annual_days:           150     # Nombre de jours d’utilisation par an
+  km_per_day:            70     # Kilomètres parcourus par jour
+  labor_hours_day:       7     # Heures de service (conduite) par jour
+  labor_cost_per_h:      19.64   # Coût horaire du conducteur (€)
+  discount_rate:         0.05    # Taux d’actualisation (5 %)
+
+# ------------------------------------------------------------------------
+# Profils d’usage (km/jour, jours/an)
+# ------------------------------------------------------------------------
+usage_profiles:
+  urbain:
+    km_per_day:   50
+    annual_days:  200
+  mixte:
+    km_per_day:   100
+    annual_days:  200
+  autoroute:
+    km_per_day:   200
+    annual_days:  200
+
+# ------------------------------------------------------------------------
+# Filières Hydrogène (coûts au kg selon la voie)
+# ------------------------------------------------------------------------
+Hydrogene_pricing:
+  price_vapor: 6.88   # €/kg (vapor)
+  price_smr:   2.00   # €/kg (SMR)
+  price_elec:  16.00   # €/kg (électrolyse)
+
+# ------------------------------------------------------------------------
+# Paramètres de la motorisation Diesel
+# ------------------------------------------------------------------------
+Diesel:
+  invest_net:            31700   # Investissement net après aides (€)
+  leasing_annual:        8000    # Loyers annuels si leasing (€)
+  residual_value:        1000   # Valeur résiduelle en fin de vie (€)
+  contract_years:        20      # Durée de vie ou de contrat (ans)
+  infra_cost:            0       # Coût infrastructure dédié (€)
+  consumption_100km:     7.3     # Consommation (L/100 km)
+  energy_price:          1.82    # Prix du litre de Diesel (€/L)
+  maintenance_annual:    800    # Coût maintenance annuel (€)
+  assurance:             400     # Assurance annuelle (€)
+  co2_tax_rate:          0      # Taxe CO₂ (€/tCO₂)
+  emission_g_per_km:     191     # Émission CO₂ (g/km)
+  embedded_emissions_tCO2: 8.0   # ex. 8 tCO₂/véhicule né à la production
+
+# ------------------------------------------------------------------------
+# Paramètres de la motorisation Électrique neuve
+# ------------------------------------------------------------------------
+Electrique:
+  invest_net:            40500   # Investissement net après aides (€)
+  leasing_annual:        12000   # Loyers annuels si leasing (€)
+  residual_value:        1000    # Valeur résiduelle (€)
+  contract_years:        20      # Durée de vie (ans)
+  infra_cost:            5000    # Coût infrastructure de charge (€)
+  consumption_100km:     22      # Consommation (kWh/100 km)
+  energy_price:          0.12    # Prix de l’électricité (€/kWh)
+  maintenance_annual:    1000     # Maintenance (€)
+  assurance:             400     # Assurance (€)
+  co2_tax_rate:          0       # Pas de taxe CO₂ (zéro émission)
+  emission_g_per_km:     0       # g/km (zéro émission)
+  embedded_emissions_tCO2: 15.0  # ex. batterie + véhicule né à la prod.
+  grid_emission_factor_kgCO2_per_kWh: 0.1
+
+# ------------------------------------------------------------------------
+# Paramètres de la motorisation Hydrogène
+# ------------------------------------------------------------------------
+Hydrogene:
+  invest_net:            71500   # Investissement net après aides (€)
+  leasing_annual:        15000   # Loyers annuels si leasing (€)
+  residual_value:        1000    # Valeur résiduelle (€)
+  contract_years:        20      # Durée de vie (ans)
+  infra_cost:            30000   # Coût infrastructure H₂ (€)
+  consumption_100km:     1.2     # Consommation (kg H₂/100 km)
+  energy_price:          15    # Prix du kg d’hydrogène (€/kg)
+  maintenance_annual:    1000    # Maintenance (€)
+  assurance:             900     # Assurance (€)
+  co2_tax_rate:          0       # Pas de taxe CO₂ (zéro émission)
+  emission_g_per_km:     0       # g/km
+  embedded_emissions_tCO2: 18.0
+  h2_upstream_emission_kgCO2_per_kg: 1 #kg de CO2 si H2 produit est vert
+
+# ------------------------------------------------------------------------
+# Paramètres de la solution Rétrofit Électrique
+# ------------------------------------------------------------------------
+Retrofit_Electrique:
+  invest_net:            20000   # Coût conversion retrofit (€)
+  leasing_annual:        6000    # Loyers leasing retrofit (€)
+  residual_value:        500    # Valeur résiduelle (€)
+  contract_years:        16       # Durée de vie retrofit (ans)
+  infra_cost:            3000    # Coût infrastructure charge retrofit (€)
+  consumption_100km:     19      # Consommation post-conversion (kWh/100 km)
+  energy_price:          0.15    # Prix de l’électricité (€/kWh)
+  maintenance_annual:    900    # Maintenance (€)
+  assurance:             400     # Assurance (€)
+  co2_tax_rate:          0       # Pas de taxe CO₂
+  emission_g_per_km:     0       # g/km
+  embedded_emissions_tCO2: 5.0
+
+# ------------------------------------------------------------------------
+# Hypothèses détaillées de coûts RÉSEAU par technologie
+# ------------------------------------------------------------------------
+network:
+  Diesel:
+    connection_cost:                  5000   # Coût raccordement principal (€)
+    pump_station_base_cost:          10000   # Station pompe initiale (€)
+    pump_unit_cost:                   5000   # Coût d’une pompe supplémentaire (€)
+    pump_capacity_vehicles:            100   # VUL desservis par pompe
+    network_opex_annual: 2000
+    piping_cost_per_meter:               50   # €/m de tuyauterie interne
+    avg_piping_length_m:                100   # Longueur moyenne de tuyauterie (m)
+    permit_cost:                      2000   # Études & permis (sécurité/incendie)
+    installation_labor_cost_per_pump:  3000   # Main-d’œuvre par pompe (€)
+
+  Électrique:
+    transformer_upgrade_cost:         80000   # Poste HT/BT (transformateur) (€)
+    charger_unit_cost:                20000   # Coût unitaire d’une borne DC (€)
+    charger_power_kW:                     50   # Puissance d’une borne (kW)
+    charger_capacity_vehicles:            10   # VUL desservis par borne
+    cable_cost_per_meter:               100   # €/m de câble HT/BT
+    network_opex_annual: 2000
+    avg_cable_length_m:                  50   # Longueur moyenne de câble (m)
+    installation_labor_cost_per_charger: 5000   # Main-d’œuvre par borne (€)
+    demand_charge_per_kW:                 50   # €/kW de puissance souscrite
+    network_service_fee_per_year:      10000   # Abonnement annuel (€)
+
+  Hydrogène:
+    base_station_cost:              1200000   # Station H₂ complète (€)
+    module_unit_cost:                800000   # Coût module additionnel (€)
+    module_capacity_vehicles:          100   # VUL desservis par module
+    dispenser_unit_cost:               2000   # Distributeur H₂ par VUL (€)
+    dispenser_capacity_vehicles:       500   # VUL desservis par distrib.
+    network_opex_annual: 2000
+    safety_system_cost:              50000   # Coûts systèmes de sécurité (€)
+    permit_cost:                    50000   # Autorisations réglementaires (€)
+    installation_labor_cost:        100000   # Main-d’œuvre totale station (€)
+
+  Retrofit_Électrique:
+    transformer_upgrade_cost:         60000   # Poste HT/BT allégé (€)
+    charger_unit_cost:                15000   # Coût borne retrofit (€)
+    charger_power_kW:                     50   # kW unitaire
+    chargers_per_vehicles:           0.066667 # bornes par VUL (~1/15)
+    charger_capacity_vehicles:           15   # VUL desservis par borne retrofit
+    cable_cost_per_meter:                80   # €/m de câble
+    network_opex_annual: 2000
+    avg_cable_length_m:                  30   # Longueur moyenne (m)
+    installation_labor_cost_per_charger: 4000   # Main-d’œuvre par borne (€)
+    demand_charge_per_kW:                 40   # €/kW de souscription
+    network_service_fee_per_year:       8000   # Abonnement annuel (€)
+
+
+
+# ------------------------------------------------------------------------
+# Spécifications Expert Jumpy Hydrogen (Stellantis)
+# ------------------------------------------------------------------------
+#Expert_Jumpy_H2:
+  #invest_net:                  71500    # Prix catalogue net après aides (€)
+  #leasing_annual:              10000    # Loyer annuel estimé (€)
+  #residual_value:              10000    # Valeur résiduelle (€)
+  #contract_years:              20        # Durée de vie (ans)
+  #infra_cost:                  20000    # Coût station H₂ dédiée (€)
+  #consumption_100km:           1.5      # Consommation (kg H₂/100 km)
+  #energy_price:                6.88     # Prix du kg d’hydrogène (€/kg)
+  #maintenance_annual:          960     # Maintenance (€)
+  #assurance:                   1000      # Assurance (€)
+  #co2_tax_rate:                0        # Taxe CO₂ (€/tCO₂)
+  #emission_g_per_km:           0        # g CO₂/km (FCEV = 0)
+  #embedded_emissions_tCO2:     18.0     # t CO₂ embarquées à la production
+  # Paramètres spécifiques Expert Jumpy
+  #fuel_cell_power_kW:          45       # Puissance pile à combustible
+  #battery_capacity_kWh:        10.5     # Capacité batterie tampon
+  #range_km:                    400      # Autonomie WLTP (km)
+  #refuel_time_min:             5        # Temps de recharge H₂ (min)
+  #grid_emission_factor_kgCO2_per_kWh: 0.056  # Facteur réseau (gCO₂/kWh)
+  #electrolyser_efficiency_kWh_per_kg:  55.0  # kWh nécessaires par kg H₂
